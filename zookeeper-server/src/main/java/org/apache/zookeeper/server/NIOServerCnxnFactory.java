@@ -622,7 +622,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         }
         configureSaslLogin();
 
-        maxClientCnxns = maxcc;
+        maxClientCnxns = maxcc;// = 60
         initMaxCnxns();
         sessionlessCnxnTimeout = Integer.getInteger(ZOOKEEPER_NIO_SESSIONLESS_CNXN_TIMEOUT, 10000);
         // We also use the sessionlessCnxnTimeout as expiring interval for
@@ -630,6 +630,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         // interval passed into the ExpiryQueue() constructor below should be
         // less than or equal to the timeout.
         cnxnExpiryQueue = new ExpiryQueue<NIOServerCnxn>(sessionlessCnxnTimeout);
+        // 线程
         expirerThread = new ConnectionExpirerThread();
 
         int numCores = Runtime.getRuntime().availableProcessors();
@@ -664,6 +665,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
             ss.socket().bind(addr, listenBacklog);
         }
         ss.configureBlocking(false);
+        // 线程
         acceptThread = new AcceptThread(ss, addr, selectorThreads);
     }
 

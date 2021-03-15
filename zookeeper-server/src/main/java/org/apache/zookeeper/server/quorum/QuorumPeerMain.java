@@ -166,11 +166,13 @@ public class QuorumPeerMain {
 
             if (config.getClientPortAddress() != null) {
                 cnxnFactory = ServerCnxnFactory.createFactory();
+                // maxcc = 60  backlog = -1
                 cnxnFactory.configure(config.getClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), false);
             }
 
             if (config.getSecureClientPortAddress() != null) {
                 secureCnxnFactory = ServerCnxnFactory.createFactory();
+                // 创建线程
                 secureCnxnFactory.configure(config.getSecureClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), true);
             }
 
@@ -179,6 +181,7 @@ public class QuorumPeerMain {
             quorumPeer.enableLocalSessions(config.areLocalSessionsEnabled());
             quorumPeer.enableLocalSessionsUpgrading(config.isLocalSessionsUpgradingEnabled());
             //quorumPeer.setQuorumPeers(config.getAllMembers());
+            // 设置选举类型 = 3
             quorumPeer.setElectionType(config.getElectionAlg());
             quorumPeer.setMyid(config.getServerId());
             quorumPeer.setTickTime(config.getTickTime());
@@ -196,6 +199,7 @@ public class QuorumPeerMain {
                 quorumPeer.setLastSeenQuorumVerifier(config.getLastSeenQuorumVerifier(), false);
             }
             quorumPeer.initConfigInZKDatabase();
+            // 设置 ServerCnxnFactory
             quorumPeer.setCnxnFactory(cnxnFactory);
             quorumPeer.setSecureCnxnFactory(secureCnxnFactory);
             quorumPeer.setSslQuorum(config.isSslQuorum());
@@ -226,6 +230,7 @@ public class QuorumPeerMain {
                 quorumPeer.setJvmPauseMonitor(new JvmPauseMonitor(config));
             }
 
+            // 准备启动线程
             quorumPeer.start();
             ZKAuditProvider.addZKStartStopAuditLog();
             quorumPeer.join();
