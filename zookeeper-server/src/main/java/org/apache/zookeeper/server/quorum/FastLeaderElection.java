@@ -688,6 +688,7 @@ public class FastLeaderElection implements Election {
      * Send notifications to all peers upon a change in our vote
      */
     private void sendNotifications() {
+        // zoo.cfg配置的集群
         for (long sid : self.getCurrentAndNextConfigVoters()) {
             QuorumVerifier qv = self.getQuorumVerifier();
             ToSend notmsg = new ToSend(
@@ -942,10 +943,9 @@ public class FastLeaderElection implements Election {
                 updateProposal(getInitId(), getInitLastLoggedZxid(), getPeerEpoch());
             }
 
-            LOG.info(
-                "New election. My id = {}, proposed zxid=0x{}",
-                self.getId(),
-                Long.toHexString(proposedZxid));
+            LOG.info("New election. My id = {}, proposed zxid=0x{}", self.getId(), Long.toHexString(proposedZxid));
+
+
             sendNotifications();
 
             SyncedLearnerTracker voteSet;

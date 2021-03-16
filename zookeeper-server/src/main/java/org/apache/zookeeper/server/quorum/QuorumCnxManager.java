@@ -360,10 +360,10 @@ public class QuorumCnxManager {
      *
      * @param sid
      */
-    public void testInitiateConnection(long sid) {
-        LOG.debug("Opening channel to server {}", sid);
-        initiateConnection(self.getVotingView().get(sid).electionAddr, sid);
-    }
+//    public void testInitiateConnection(long sid) {
+//        LOG.debug("Opening channel to server {}", sid);
+//        initiateConnection(self.getVotingView().get(sid).electionAddr, sid);
+//    }
 
     /**
      * First we create the socket, perform SSL handshake and authentication if needed.
