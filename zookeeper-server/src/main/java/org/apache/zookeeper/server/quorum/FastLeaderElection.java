@@ -547,6 +547,7 @@ public class FastLeaderElection implements Election {
          * Starts instances of WorkerSender and WorkerReceiver
          */
         void start() {
+            //
             this.wsThread.start();
             this.wrThread.start();
         }
