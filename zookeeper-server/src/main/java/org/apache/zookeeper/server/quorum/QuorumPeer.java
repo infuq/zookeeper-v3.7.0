@@ -1140,7 +1140,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         }
         */
 
-        // 选举
+        // 选举Leader
         startLeaderElection();
 
         startJvmPauseMonitor();
